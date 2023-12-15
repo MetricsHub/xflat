@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<Document>
+	<Owner>User</Owner>
+	<Disks>
+		<Disk name="Disk1" size="1000">
+			<Free>500</Free>
+			<Volumes>
+				<Volume name="Vol1">
+					<Subscribe>600</Subscribe>
+				</Volume>
+			</Volumes>
+		</Disk>
+		<Disk name="Disk2" size="2000">
+			<Free>750</Free>
+		</Disk>
+		<Disk name="Disk3" size="2900">
+			<Free>1500</Free>
+			<Volumes>
+				<Volume name="Vol3.0">
+					<Subscribe>3000</Subscribe>
+				</Volume>
+				<Volume name="Vol3.1">
+					<Subscribe>3100</Subscribe>
+				</Volume>
+				<Volume name="Vol3.2">
+					<Subscribe>3200</Subscribe>
+				</Volume>
+			</Volumes>
+		</Disk>
+	</Disks>
+	<OS name="Linux"/>
+</Document>

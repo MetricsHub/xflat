@@ -1,11 +1,13 @@
-# oss-maven-template
+# XFlat Utility
 
-![GitHub release (with filter)](https://img.shields.io/github/v/release/sentrysoftware/oss-maven-template)
-![Build](https://img.shields.io/github/actions/workflow/status/sentrysoftware/oss-maven-template/deploy.yml)
-![GitHub top language](https://img.shields.io/github/languages/top/sentrysoftware/oss-maven-template)
-![License](https://img.shields.io/github/license/sentrysoftware/oss-maven-template)
+![GitHub release (with filter)](https://img.shields.io/github/v/release/sentrysoftware/xflat)
+![Build](https://img.shields.io/github/actions/workflow/status/sentrysoftware/xflat/deploy.yml)
+![GitHub top language](https://img.shields.io/github/languages/top/sentrysoftware/xflat)
+![License](https://img.shields.io/github/license/sentrysoftware/xflat)
 
-Repository template for all Sentry open-source Java projects, published on Maven Central.
+The XFlat Utility is responsible of parsing XML files into a list of values list.
+
+See **[Project Documentation](https://sentrysoftware.github.io/xflat)** and the [Javadoc](https://sentrysoftware.github.io/xflat/apidocs) for more information on how to use this library in your code.
 
 ## Build instructions
 

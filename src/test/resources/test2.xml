@@ -1,0 +1,30 @@
+<document>
+	<network>
+		<properties>
+			<id>HPB7B952B1BA-subnet_one</id>
+			<name>subnet_one</name>
+			<defaultnetwork>yes</defaultnetwork>
+			<bootproto>dhcp</bootproto>
+			<ipaddress>10.0.14.187</ipaddress>
+			<status>up</status>
+			<netmask>255.255.0.0</netmask>
+			<gateway>10.0.0.244</gateway>
+			<domainname>internal.sentrysoftware.net</domainname>
+			<macaddress>00:15:5D:0A:F9:15</macaddress>
+			<usage>both</usage>
+			<mtu>1500</mtu>
+			<connectionspeed>10 Gig</connectionspeed>
+			<interfaces>0</interfaces>
+		</properties>
+		<bonds>
+			<bond>
+				<properties>
+					<id>bond-1</id>
+					<name>bond-name</name>
+				</properties>
+				<interfaces/>
+			</bond>
+		</bonds>
+		<staticRoutes/>
+	</network>
+</document>
