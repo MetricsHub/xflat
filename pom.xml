@@ -4,7 +4,7 @@
 	<groupId>org.sentrysoftware</groupId>
 	<artifactId>xflat</artifactId>
 	<name>XFlat Utility</name>
-	<version>1.0.00</version>
+	<version>1.1.00-SNAPSHOT</version>
 	<description>XFlat Utility for Java</description>
   <packaging>jar</packaging>
 
@@ -43,7 +43,7 @@
 	<scm>
 		<connection>scm:git:https://github.com/sentrysoftware/xflat.git</connection>
 		<url>https://github.com/sentrysoftware/xflat</url>
-		<tag>v1.0.00</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<developers>
@@ -88,7 +88,7 @@
 
 		<!-- Reproducible Build -->
 		<!-- See https://maven.apache.org/guides/mini/guide-reproducible-builds.html -->
-		<project.build.outputTimestamp>2023-12-18T22:13:53Z</project.build.outputTimestamp>
+		<project.build.outputTimestamp>2023-12-18T22:14:34Z</project.build.outputTimestamp>
 	</properties>
 
 	<dependencyManagement>
