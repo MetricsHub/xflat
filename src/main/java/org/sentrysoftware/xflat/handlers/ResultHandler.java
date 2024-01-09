@@ -20,6 +20,7 @@ package org.sentrysoftware.xflat.handlers;
  * ╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱
  */
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -55,7 +56,7 @@ public class ResultHandler {
 
 		// if there's no map return empty list
 		if (null == rowValuesMap || rowValuesMap.isEmpty()) {
-			return Collections.emptyList();
+			return new ArrayList<>(Collections.emptyList());
 		}
 
 		// Recursively Link and merge the rows fragments and keep the row order.
@@ -69,7 +70,7 @@ public class ResultHandler {
 
 	static List<String> getValueData(final Map<Integer, String> values, final int totalProperties) {
 		return values.containsKey(ROOT_TAG_NOT_FOUND) ?
-				Collections.emptyList() :
+				new ArrayList<>(Collections.emptyList()) :
 				IntStream.range(0, totalProperties).boxed()
 					.map(id -> values.getOrDefault(id, Utils.EMPTY))
 					.collect(Collectors.toList());
