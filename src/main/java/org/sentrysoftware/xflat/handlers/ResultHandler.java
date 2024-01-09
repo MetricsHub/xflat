@@ -56,7 +56,7 @@ public class ResultHandler {
 
 		// if there's no map return empty list
 		if (null == rowValuesMap || rowValuesMap.isEmpty()) {
-			return new ArrayList<>(Collections.emptyList());
+			return new ArrayList<>();
 		}
 
 		// Recursively Link and merge the rows fragments and keep the row order.
@@ -70,7 +70,7 @@ public class ResultHandler {
 
 	static List<String> getValueData(final Map<Integer, String> values, final int totalProperties) {
 		return values.containsKey(ROOT_TAG_NOT_FOUND) ?
-				new ArrayList<>(Collections.emptyList()) :
+				new ArrayList<>() :
 				IntStream.range(0, totalProperties).boxed()
 					.map(id -> values.getOrDefault(id, Utils.EMPTY))
 					.collect(Collectors.toList());
