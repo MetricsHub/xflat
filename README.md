@@ -7,7 +7,7 @@
 
 The XFlat Utility is responsible of parsing XML files into a list of values list.
 
-See **[Project Documentation](https://sentrysoftware.github.io/xflat)** and the [Javadoc](https://sentrysoftware.github.io/xflat/apidocs) for more information on how to use this library in your code.
+See **[Project Documentation](https://sentrysoftware.org/xflat)** and the [Javadoc](https://sentrysoftware.org/xflat/apidocs) for more information on how to use this library in your code.
 
 ## Build instructions
 
