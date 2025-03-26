@@ -1,6 +1,6 @@
-package org.sentrysoftware.xflat.handlers;
+package org.metricshub.xflat.handlers;
 
-import static org.sentrysoftware.xflat.Utils.EMPTY;
+import static org.metricshub.xflat.Utils.EMPTY;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;

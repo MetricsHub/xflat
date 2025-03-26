@@ -1,10 +1,10 @@
-package org.sentrysoftware.xflat.handlers;
+package org.metricshub.xflat.handlers;
 
 /*-
  * ╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲
  * XFlat Utility
  * ჻჻჻჻჻჻
- * Copyright 2023 Sentry Software
+ * Copyright (C) 2023 - 2025 MetricsHub
  * ჻჻჻჻჻჻
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,13 +30,13 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import org.sentrysoftware.xflat.Utils;
-import org.sentrysoftware.xflat.exceptions.XFlatException;
-import org.sentrysoftware.xflat.exceptions.XFlatRunTimeException;
-import org.sentrysoftware.xflat.types.SearchPathElement;
-import org.sentrysoftware.xflat.types.SearchPathElementAttribute;
-import org.sentrysoftware.xflat.types.SearchPathElementProperty;
-import org.sentrysoftware.xflat.types.SearchPathNode;
+import org.metricshub.xflat.Utils;
+import org.metricshub.xflat.exceptions.XFlatException;
+import org.metricshub.xflat.exceptions.XFlatRunTimeException;
+import org.metricshub.xflat.types.SearchPathElement;
+import org.metricshub.xflat.types.SearchPathElementAttribute;
+import org.metricshub.xflat.types.SearchPathElementProperty;
+import org.metricshub.xflat.types.SearchPathNode;
 
 public class SearchPathTreeHandler {
 

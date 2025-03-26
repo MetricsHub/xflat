@@ -1,6 +1,6 @@
-package org.sentrysoftware.xflat.handlers;
+package org.metricshub.xflat.handlers;
 
-import static org.sentrysoftware.xflat.Utils.EMPTY;
+import static org.metricshub.xflat.Utils.EMPTY;
 import static java.util.Collections.emptyMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -21,12 +21,12 @@ import org.mockito.MockedStatic;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import org.sentrysoftware.xflat.XFlatTestUtils;
-import org.sentrysoftware.xflat.exceptions.XFlatException;
-import org.sentrysoftware.xflat.types.SearchPathElement;
-import org.sentrysoftware.xflat.types.SearchPathElementAttribute;
-import org.sentrysoftware.xflat.types.SearchPathElementProperty;
-import org.sentrysoftware.xflat.types.SearchPathNode;
+import org.metricshub.xflat.XFlatTestUtils;
+import org.metricshub.xflat.exceptions.XFlatException;
+import org.metricshub.xflat.types.SearchPathElement;
+import org.metricshub.xflat.types.SearchPathElementAttribute;
+import org.metricshub.xflat.types.SearchPathElementProperty;
+import org.metricshub.xflat.types.SearchPathNode;
 
 class XmlHandlerTest extends XFlatTestUtils {
 

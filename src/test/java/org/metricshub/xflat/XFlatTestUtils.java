@@ -1,4 +1,4 @@
-package org.sentrysoftware.xflat;
+package org.metricshub.xflat;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

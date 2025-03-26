@@ -1,10 +1,10 @@
-package org.sentrysoftware.xflat;
+package org.metricshub.xflat;
 
 /*-
  * ╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲
  * XFlat Utility
  * ჻჻჻჻჻჻
- * Copyright 2023 Sentry Software
+ * Copyright (C) 2023 - 2025 MetricsHub
  * ჻჻჻჻჻჻
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,11 +25,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.sentrysoftware.xflat.handlers.SearchPathTreeHandler;
-import org.sentrysoftware.xflat.handlers.XmlHandler;
-import org.sentrysoftware.xflat.types.SearchPathNode;
-import org.sentrysoftware.xflat.handlers.ResultHandler;
-import org.sentrysoftware.xflat.exceptions.XFlatException;
+import org.metricshub.xflat.handlers.SearchPathTreeHandler;
+import org.metricshub.xflat.handlers.XmlHandler;
+import org.metricshub.xflat.types.SearchPathNode;
+import org.metricshub.xflat.handlers.ResultHandler;
+import org.metricshub.xflat.exceptions.XFlatException;
 
 
 

@@ -1,6 +1,6 @@
-package org.sentrysoftware.xflat.handlers;
+package org.metricshub.xflat.handlers;
 
-import static org.sentrysoftware.xflat.Utils.EMPTY;
+import static org.metricshub.xflat.Utils.EMPTY;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
@@ -13,13 +13,13 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import org.sentrysoftware.xflat.XFlatTestUtils;
-import org.sentrysoftware.xflat.exceptions.XFlatException;
-import org.sentrysoftware.xflat.exceptions.XFlatRunTimeException;
-import org.sentrysoftware.xflat.types.SearchPathElement;
-import org.sentrysoftware.xflat.types.SearchPathElementAttribute;
-import org.sentrysoftware.xflat.types.SearchPathElementProperty;
-import org.sentrysoftware.xflat.types.SearchPathNode;
+import org.metricshub.xflat.XFlatTestUtils;
+import org.metricshub.xflat.exceptions.XFlatException;
+import org.metricshub.xflat.exceptions.XFlatRunTimeException;
+import org.metricshub.xflat.types.SearchPathElement;
+import org.metricshub.xflat.types.SearchPathElementAttribute;
+import org.metricshub.xflat.types.SearchPathElementProperty;
+import org.metricshub.xflat.types.SearchPathNode;
 
 class SearchPathTreeHandlerTest extends XFlatTestUtils {
 

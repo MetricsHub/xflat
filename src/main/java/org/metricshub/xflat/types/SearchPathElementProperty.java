@@ -1,10 +1,10 @@
-package org.sentrysoftware.xflat.types;
+package org.metricshub.xflat.types;
 
 /*-
  * ╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲
  * XFlat Utility
  * ჻჻჻჻჻჻
- * Copyright 2023 Sentry Software
+ * Copyright (C) 2023 - 2025 MetricsHub
  * ჻჻჻჻჻჻
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,15 +20,47 @@ package org.sentrysoftware.xflat.types;
  * ╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱
  */
 
-public class SearchPathElementAttribute extends SearchPathElementProperty {
+import java.util.Objects;
 
-	public SearchPathElementAttribute(final int id, final String name) {
-		super(id, name);
+public class SearchPathElementProperty extends SearchPathElement {
+
+	private final int id;
+
+	public SearchPathElementProperty(final int id, final String name) {
+		super(name, false);
+		this.id = id;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(id);
+		return result;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (!(obj instanceof SearchPathElementProperty)) {
+			return false;
+		}
+		final SearchPathElementProperty other = (SearchPathElementProperty) obj;
+		return id == other.id;
 	}
 
 	@Override
 	public String toString() {
-		return "SearchPathElementAttribute [getId()=" + getId() + ", getName()=" + getName() + "]";
+		return "SearchPathElementProperty [id=" + id + ", getName()=" + getName() + "]";
 	}
 
 }

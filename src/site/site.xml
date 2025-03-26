@@ -2,7 +2,7 @@
 <project name="${project.name}">
 
 	<skin>
-		<groupId>org.sentrysoftware.maven</groupId>
+		<groupId>org.metricshub.maven</groupId>
 		<artifactId>sentry-maven-skin</artifactId>
 		<version>6.2.00</version>
 	</skin>

@@ -21,7 +21,7 @@ Use it as follows:
 ```Java
 import java.util.List;
 
-import org.sentrysoftware.xflat.exceptions.XFlatException;
+import exceptions.org.metricshub.xflat.XFlatException;
 
 public class Main {
 

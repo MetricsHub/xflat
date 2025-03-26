@@ -1,6 +1,6 @@
-package org.sentrysoftware.xflat;
+package org.metricshub.xflat;
 
-import static org.sentrysoftware.xflat.Utils.EMPTY;
+import static org.metricshub.xflat.Utils.EMPTY;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import org.sentrysoftware.xflat.exceptions.XFlatException;
+import org.metricshub.xflat.exceptions.XFlatException;
 
 class XFlatTest extends XFlatTestUtils {
 
