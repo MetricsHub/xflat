@@ -30,5 +30,4 @@ public class SearchPathElementAttribute extends SearchPathElementProperty {
 	public String toString() {
 		return "SearchPathElementAttribute [getId()=" + getId() + ", getName()=" + getName() + "]";
 	}
-
 }

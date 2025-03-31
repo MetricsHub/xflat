@@ -24,18 +24,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
+import org.metricshub.xflat.exceptions.XFlatException;
+import org.metricshub.xflat.handlers.ResultHandler;
 import org.metricshub.xflat.handlers.SearchPathTreeHandler;
 import org.metricshub.xflat.handlers.XmlHandler;
 import org.metricshub.xflat.types.SearchPathNode;
-import org.metricshub.xflat.handlers.ResultHandler;
-import org.metricshub.xflat.exceptions.XFlatException;
-
-
 
 public class XFlat {
 
-	private XFlat() { }
+	private XFlat() {}
 
 	/**
 	 * Parse a XML with the argument properties into a list of values list.
@@ -47,18 +44,17 @@ public class XFlat {
 	 * @return The list of values list.
 	 * @throws XFlatException
 	 */
-	public static List<List<String>> parseXml(
-			final String xml,
-			final String properties,
-			final String rootTag) throws XFlatException {
+	public static List<List<String>> parseXml(final String xml, final String properties, final String rootTag)
+		throws XFlatException {
 		Utils.checkNonBlank(xml, "xml");
 		Utils.checkNonBlank(properties, "properties");
 		Utils.checkNonBlank(rootTag, "rootTag");
 
 		// Init complete search path for each properties.
-		final List<String> propertiesList = Stream.of(properties.replaceAll("\\s", Utils.EMPTY).split(";"))
-				.filter(property -> !Utils.isBlank(property))
-				.collect(Collectors.toList());
+		final List<String> propertiesList = Stream
+			.of(properties.replaceAll("\\s", Utils.EMPTY).split(";"))
+			.filter(property -> !Utils.isBlank(property))
+			.collect(Collectors.toList());
 
 		final SearchPathNode rootTreeNode = SearchPathTreeHandler.build(propertiesList, rootTag);
 

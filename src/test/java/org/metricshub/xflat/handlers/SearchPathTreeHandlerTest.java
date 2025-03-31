@@ -1,18 +1,16 @@
 package org.metricshub.xflat.handlers;
 
-import static org.metricshub.xflat.Utils.EMPTY;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.metricshub.xflat.Utils.EMPTY;
 
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
-
 import org.metricshub.xflat.XFlatTestUtils;
 import org.metricshub.xflat.exceptions.XFlatException;
 import org.metricshub.xflat.exceptions.XFlatRunTimeException;
@@ -24,6 +22,7 @@ import org.metricshub.xflat.types.SearchPathNode;
 class SearchPathTreeHandlerTest extends XFlatTestUtils {
 
 	private static final SearchPathNode EXPECTED_SEARCH_PATH_NODE;
+
 	static {
 		final SearchPathNode ownerNode = new SearchPathNode(new SearchPathElementProperty(1, "Owner"));
 
@@ -32,8 +31,7 @@ class SearchPathTreeHandlerTest extends XFlatTestUtils {
 		osNode.addNode(osNameNode);
 
 		final SearchPathNode volumeNameNode = new SearchPathNode(new SearchPathElementAttribute(2, "name"));
-		final SearchPathNode volumeSubscribeNode =
-				new SearchPathNode(new SearchPathElementProperty(3, "Subscribe"));
+		final SearchPathNode volumeSubscribeNode = new SearchPathNode(new SearchPathElementProperty(3, "Subscribe"));
 		final SearchPathNode volumeNode = new SearchPathNode(new SearchPathElement("Volume", false));
 		volumeNode.addNode(volumeNameNode);
 		volumeNode.addNode(volumeSubscribeNode);
@@ -61,18 +59,17 @@ class SearchPathTreeHandlerTest extends XFlatTestUtils {
 		EXPECTED_SEARCH_PATH_NODE = documentNode;
 	}
 
-
 	@Test
 	void testBuild() throws Exception {
-
 		final List<String> propertiesPathList = asList(
-				"OS>name",
-				"Owner",
-				"Disks/Disk/Volumes/Volume>name",
-				"Disks/Disk/Volumes/Volume/Subscribe",
-				"Disks/Disk>name",
-				"Disks/Disk>size",
-				"Disks/Disk/Free");
+			"OS>name",
+			"Owner",
+			"Disks/Disk/Volumes/Volume>name",
+			"Disks/Disk/Volumes/Volume/Subscribe",
+			"Disks/Disk>name",
+			"Disks/Disk>size",
+			"Disks/Disk/Free"
+		);
 
 		assertThrows(IllegalArgumentException.class, () -> SearchPathTreeHandler.build(null, ROOT_TAG));
 		assertThrows(IllegalArgumentException.class, () -> SearchPathTreeHandler.build(propertiesPathList, null));
@@ -81,31 +78,28 @@ class SearchPathTreeHandlerTest extends XFlatTestUtils {
 
 		assertThrows(XFlatException.class, () -> SearchPathTreeHandler.build(emptyList(), ROOT_TAG));
 
-		verifySearchPathNode(
-				EXPECTED_SEARCH_PATH_NODE,
-				SearchPathTreeHandler.build(propertiesPathList, ROOT_TAG));
+		verifySearchPathNode(EXPECTED_SEARCH_PATH_NODE, SearchPathTreeHandler.build(propertiesPathList, ROOT_TAG));
 	}
 
 	@Test
 	void testBuildSearchPathElements() {
-
 		final String rootTag = "Document/";
 
-		assertThrows(
-				IllegalArgumentException.class, () -> SearchPathTreeHandler.buildSearchPathElements(0, null, rootTag));
-		assertThrows(
-				IllegalArgumentException.class, () -> SearchPathTreeHandler.buildSearchPathElements(0, "", rootTag));
+		assertThrows(IllegalArgumentException.class, () -> SearchPathTreeHandler.buildSearchPathElements(0, null, rootTag));
+		assertThrows(IllegalArgumentException.class, () -> SearchPathTreeHandler.buildSearchPathElements(0, "", rootTag));
 		assertThrows(IllegalArgumentException.class, () -> SearchPathTreeHandler.buildSearchPathElements(0, " ", "/"));
 
 		// check attribute should be the last property
 		assertThrows(
-				XFlatRunTimeException.class,
-				() -> SearchPathTreeHandler.buildSearchPathElements(0, "OS>name/value", rootTag));
+			XFlatRunTimeException.class,
+			() -> SearchPathTreeHandler.buildSearchPathElements(0, "OS>name/value", rootTag)
+		);
 
 		// check attribute should be unique
 		assertThrows(
-				XFlatRunTimeException.class,
-				() -> SearchPathTreeHandler.buildSearchPathElements(0, "OS>name>value", rootTag));
+			XFlatRunTimeException.class,
+			() -> SearchPathTreeHandler.buildSearchPathElements(0, "OS>name>value", rootTag)
+		);
 
 		{
 			final Deque<SearchPathElement> expected = new LinkedList<>();
@@ -122,9 +116,7 @@ class SearchPathTreeHandlerTest extends XFlatTestUtils {
 			expected.add(new SearchPathElement("Document", true));
 			expected.add(new SearchPathElementProperty(1, "Owner"));
 
-			assertEquals(
-					expected,
-					SearchPathTreeHandler.buildSearchPathElements(1, "Owner", "root_tree/Document//"));
+			assertEquals(expected, SearchPathTreeHandler.buildSearchPathElements(1, "Owner", "root_tree/Document//"));
 		}
 
 		{
@@ -134,9 +126,7 @@ class SearchPathTreeHandlerTest extends XFlatTestUtils {
 			expected.add(new SearchPathElement("OS", false));
 			expected.add(new SearchPathElementAttribute(1, "name"));
 
-			assertEquals(
-					expected,
-					SearchPathTreeHandler.buildSearchPathElements(1, "OS>name", "root_tree//Document/"));
+			assertEquals(expected, SearchPathTreeHandler.buildSearchPathElements(1, "OS>name", "root_tree//Document/"));
 		}
 
 		{
@@ -145,9 +135,7 @@ class SearchPathTreeHandlerTest extends XFlatTestUtils {
 			expected.add(new SearchPathElement("Document", true));
 			expected.add(new SearchPathElementAttribute(1, "name"));
 
-			assertEquals(
-					expected,
-					SearchPathTreeHandler.buildSearchPathElements(1, ">name", "root_tree/Document/"));
+			assertEquals(expected, SearchPathTreeHandler.buildSearchPathElements(1, ">name", "root_tree/Document/"));
 		}
 
 		{
@@ -157,9 +145,7 @@ class SearchPathTreeHandlerTest extends XFlatTestUtils {
 			expected.add(new SearchPathElement("elem", true));
 			expected.add(new SearchPathElementAttribute(1, "name"));
 
-			assertEquals(
-					expected,
-					SearchPathTreeHandler.buildSearchPathElements(1, "..>name", "root_tree/doc/elem/"));
+			assertEquals(expected, SearchPathTreeHandler.buildSearchPathElements(1, "..>name", "root_tree/doc/elem/"));
 		}
 
 		{
@@ -170,8 +156,9 @@ class SearchPathTreeHandlerTest extends XFlatTestUtils {
 			expected.add(new SearchPathElementAttribute(1, "total"));
 
 			assertEquals(
-					expected,
-					SearchPathTreeHandler.buildSearchPathElements(1, "../..>total", "root_tree/doc/Disks/Disk/"));
+				expected,
+				SearchPathTreeHandler.buildSearchPathElements(1, "../..>total", "root_tree/doc/Disks/Disk/")
+			);
 		}
 
 		{
@@ -183,14 +170,14 @@ class SearchPathTreeHandlerTest extends XFlatTestUtils {
 			expected.add(new SearchPathElementProperty(1, "Free"));
 
 			assertEquals(
-					expected,
-					SearchPathTreeHandler.buildSearchPathElements(1, "../Free", "root_tree/Document/Disks/Disk/Volumes/"));
+				expected,
+				SearchPathTreeHandler.buildSearchPathElements(1, "../Free", "root_tree/Document/Disks/Disk/Volumes/")
+			);
 		}
 	}
 
 	@Test
 	void testBuildSearchPathNodes() {
-
 		final Deque<SearchPathElement> owner = new LinkedList<>();
 		owner.add(new SearchPathElement("Document", true));
 		owner.add(new SearchPathElementProperty(1, "Owner"));
@@ -234,16 +221,20 @@ class SearchPathTreeHandlerTest extends XFlatTestUtils {
 		volumeSize.add(new SearchPathElement("Volume", false));
 		volumeSize.add(new SearchPathElementProperty(3, "Subscribe"));
 
-		final List<Deque<SearchPathElement>> searchPathElements =
-				asList(owner, os, diskName, diskSize, diskFree, volumeName, volumeSize);
+		final List<Deque<SearchPathElement>> searchPathElements = asList(
+			owner,
+			os,
+			diskName,
+			diskSize,
+			diskFree,
+			volumeName,
+			volumeSize
+		);
 
-		verifySearchPathNode(
-				EXPECTED_SEARCH_PATH_NODE,
-				SearchPathTreeHandler.buildSearchPathNodes(searchPathElements));
+		verifySearchPathNode(EXPECTED_SEARCH_PATH_NODE, SearchPathTreeHandler.buildSearchPathNodes(searchPathElements));
 	}
 
 	private static void verifySearchPathNode(final SearchPathNode expected, final SearchPathNode actual) {
-
 		assertEquals(expected.getElement(), actual.getElement());
 		assertEquals(expected.getNexts().size(), actual.getNexts().size());
 
@@ -254,7 +245,7 @@ class SearchPathTreeHandlerTest extends XFlatTestUtils {
 		final List<SearchPathNode> expectedNexts = expected.getNexts().stream().collect(toList());
 		final List<SearchPathNode> actualNexts = actual.getNexts().stream().collect(toList());
 
-		for (int i=0; i<expectedNexts.size(); i++) {
+		for (int i = 0; i < expectedNexts.size(); i++) {
 			verifySearchPathNode(expectedNexts.get(i), actualNexts.get(i));
 		}
 	}

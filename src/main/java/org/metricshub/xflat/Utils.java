@@ -21,9 +21,9 @@ package org.metricshub.xflat;
  */
 
 public class Utils {
-	
+
 	public static final String EMPTY = "";
-	
+
 	/**
 	 * Check if the required argument is not blank (null or empty).
 	 *
@@ -36,7 +36,7 @@ public class Utils {
 			throw new IllegalArgumentException(name + " must not be null or empty.");
 		}
 	}
-	
+
 	/**
 	 * Check if the required argument is not null.
 	 *
@@ -49,7 +49,7 @@ public class Utils {
 			throw new IllegalArgumentException(name + " must not be null.");
 		}
 	}
-	
+
 	/**
 	 * @param value The value to check
 	 * @return whether the value is null, empty or contains only blank chars
@@ -57,7 +57,7 @@ public class Utils {
 	public static boolean isBlank(String value) {
 		return value == null || isEmpty(value);
 	}
-	
+
 	/**
 	 * @param value The value to check
 	 * @return whether the value is not null, nor empty nor contains only blank chars
@@ -65,7 +65,7 @@ public class Utils {
 	public static boolean isNotBlank(final String value) {
 		return !isBlank(value);
 	}
-	
+
 	/**
 	 * @param value The value to check
 	 * @return whether the value is empty of non-blank chars
@@ -74,5 +74,4 @@ public class Utils {
 	public static boolean isEmpty(String value) {
 		return value.trim().isEmpty();
 	}
-
 }

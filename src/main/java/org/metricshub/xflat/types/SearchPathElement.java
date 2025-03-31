@@ -49,29 +49,34 @@ public class SearchPathElement {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		SearchPathElement other = (SearchPathElement) obj;
-		if (fromRootTag != other.fromRootTag)
+		if (fromRootTag != other.fromRootTag) {
 			return false;
+		}
 		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
+			return other.name == null;
+		} else {
+			return name.equals(other.name);
+		}
 	}
 
 	@Override
 	public String toString() {
 		return new StringBuilder("SearchPathElement [")
-				.append("name=").append(name)
-				.append(", fromRootTag=").append(fromRootTag)
-				.append("]")
-				.toString();
+			.append("name=")
+			.append(name)
+			.append(", fromRootTag=")
+			.append(fromRootTag)
+			.append("]")
+			.toString();
 	}
 }

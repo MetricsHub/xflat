@@ -87,23 +87,32 @@ public class SearchPathNode {
 	 * @return
 	 */
 	private static int compare(final SearchPathNode node1, final SearchPathNode node2) {
-		if ((node1.getElement() instanceof SearchPathElementAttribute) &&
-				!(node2.getElement() instanceof SearchPathElementAttribute)) {
+		// @formatter:off
+		// CHECKSTYLE:OFF
+		if (
+			(node1.getElement() instanceof SearchPathElementAttribute) &&
+			!(node2.getElement() instanceof SearchPathElementAttribute)
+		) {
 			return IS_BEFORE;
 		}
 
-		if (!(node1.getElement() instanceof SearchPathElementAttribute) &&
-				(node2.getElement() instanceof SearchPathElementAttribute)) {
+		if (
+			!(node1.getElement() instanceof SearchPathElementAttribute) &&
+			(node2.getElement() instanceof SearchPathElementAttribute)
+		) {
 			return IS_AFTER;
 		}
-
-		if ((node1.getElement() instanceof SearchPathElementProperty) &&
-				(node2.getElement() instanceof SearchPathElement)) {
+		// CHECKSTYLE:ON
+		// @formatter:on
+		if (
+			(node1.getElement() instanceof SearchPathElementProperty) && (node2.getElement() instanceof SearchPathElement)
+		) {
 			return IS_BEFORE;
 		}
 
-		if ((node1.getElement() instanceof SearchPathElement) &&
-				(node2.getElement() instanceof SearchPathElementProperty)) {
+		if (
+			(node1.getElement() instanceof SearchPathElement) && (node2.getElement() instanceof SearchPathElementProperty)
+		) {
 			return IS_AFTER;
 		}
 

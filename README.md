@@ -5,7 +5,7 @@
 ![GitHub top language](https://img.shields.io/github/languages/top/metricshub/xflat)
 ![License](https://img.shields.io/github/license/metricshub/xflat)
 
-The XFlat Utility is responsible of parsing XML files into a list of values list.
+The XFlat Utility is responsible for parsing XML files into a list of values list.
 
 See **[Project Documentation](https://metricshub.org/xflat)** and the [Javadoc](https://metricshub.org/xflat/apidocs/) for more information on how to use this library in your code.
 

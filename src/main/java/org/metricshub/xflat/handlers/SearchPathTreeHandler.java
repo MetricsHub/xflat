@@ -29,7 +29,6 @@ import java.util.Queue;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
 import org.metricshub.xflat.Utils;
 import org.metricshub.xflat.exceptions.XFlatException;
 import org.metricshub.xflat.exceptions.XFlatRunTimeException;
@@ -40,7 +39,7 @@ import org.metricshub.xflat.types.SearchPathNode;
 
 public class SearchPathTreeHandler {
 
-	private SearchPathTreeHandler() { }
+	private SearchPathTreeHandler() {}
 
 	private static final String ATTRIBUTE_TAG = ">";
 	private static final String SLASH = "/";
@@ -72,26 +71,23 @@ public class SearchPathTreeHandler {
 	 * @return The first node of the search path tree
 	 * @throws XFlatException for errors in the search path tree build
 	 */
-	public static SearchPathNode build(
-			final List<String> propertiesPathList,
-			final String rootTag) throws XFlatException {
-
+	public static SearchPathNode build(final List<String> propertiesPathList, final String rootTag)
+		throws XFlatException {
 		// For security because build is a public function but in practical, it's impossible.
 		Utils.checkNonNull(propertiesPathList, "propertiesPathList");
 		Utils.checkNonBlank(rootTag, "rootTag");
 
 		final String root = new StringBuilder()
-				.append(SLASH)
-				.append(rootTag.replaceAll("\\s", Utils.EMPTY))
-				.append(SLASH)
-				.toString();
+			.append(SLASH)
+			.append(rootTag.replaceAll("\\s", Utils.EMPTY))
+			.append(SLASH)
+			.toString();
 
 		if (propertiesPathList.isEmpty()) {
 			throw new XFlatException("Should have at least one property.");
 		}
 
 		try {
-
 			// Combine the rootPath and the properties list into an ordered searchPathElements list.
 			// rootPath = /
 			// properties:
@@ -106,15 +102,18 @@ public class SearchPathTreeHandler {
 			// root_tree, element_A, element_B, element_C, property_D
 
 			final List<Deque<SearchPathElement>> searchPathElements = IntStream
-					.range(0, propertiesPathList.size())
-					.mapToObj(i -> buildSearchPathElements(i, propertiesPathList.get(i), root))
-					.sorted((q1,q2) -> q1.stream().map(SearchPathElement::getName).collect(Collectors.joining(SLASH))
-						.compareToIgnoreCase(q2.stream().map(SearchPathElement::getName)
-																	.collect(Collectors.joining(SLASH))))
-					.collect(Collectors.toList());
+				.range(0, propertiesPathList.size())
+				.mapToObj(i -> buildSearchPathElements(i, propertiesPathList.get(i), root))
+				.sorted((q1, q2) ->
+					q1
+						.stream()
+						.map(SearchPathElement::getName)
+						.collect(Collectors.joining(SLASH))
+						.compareToIgnoreCase(q2.stream().map(SearchPathElement::getName).collect(Collectors.joining(SLASH)))
+				)
+				.collect(Collectors.toList());
 
 			return buildSearchPathNodes(searchPathElements);
-
 		} catch (final XFlatRunTimeException e) {
 			throw new XFlatException(e.getMessage(), e);
 		}
@@ -129,29 +128,28 @@ public class SearchPathTreeHandler {
 	 * @return The search path elements of the property
 	 */
 	static Deque<SearchPathElement> buildSearchPathElements(
-			final int index,
-			final String propertyPath,
-			final String rootTag) {
+		final int index,
+		final String propertyPath,
+		final String rootTag
+	) {
 		// For security because build is a public function but in practical, it's impossible.
 		Utils.checkNonBlank(propertyPath, "propertyPath");
 
-		final String path = new StringBuilder(rootTag)
-				.append(propertyPath)
-				.toString()
-				.replace("/>", ATTRIBUTE_TAG);
+		final String path = new StringBuilder(rootTag).append(propertyPath).toString().replace("/>", ATTRIBUTE_TAG);
 
-		final List<String> pathElements = Stream.of(path.split(SLASH))
-				.filter(Utils::isNotBlank)
-				.collect(Collectors.toList());
+		final List<String> pathElements = Stream
+			.of(path.split(SLASH))
+			.filter(Utils::isNotBlank)
+			.collect(Collectors.toList());
 
-		final Queue<String> rootTags = Stream.of(rootTag.split(SLASH))
-				.filter(Utils::isNotBlank)
-				.collect(Collectors.toCollection(LinkedList::new));
+		final Queue<String> rootTags = Stream
+			.of(rootTag.split(SLASH))
+			.filter(Utils::isNotBlank)
+			.collect(Collectors.toCollection(LinkedList::new));
 
 		// normalize path by changing .. to upper element
 		final Deque<SearchPathElement> pathElementQueue = new LinkedList<>();
-		for (final String element: pathElements) {
-
+		for (final String element : pathElements) {
 			final String rootTagElement = rootTags.poll();
 
 			if (ELEMENT_BEFORE_TAG.equals(element)) {
@@ -160,13 +158,12 @@ public class SearchPathTreeHandler {
 				final SearchPathElement precedent = pathElementQueue.peekLast();
 				if (precedent != null && precedent.getName().contains(ATTRIBUTE_TAG)) {
 					throw new XFlatRunTimeException(
-							String.format(
-									"attribute %s is not the last element of the searchingPath %s",
-									precedent,
-									path));
+						String.format("attribute %s is not the last element of the searchingPath %s", precedent, path)
+					);
 				}
 				pathElementQueue.add(
-						new SearchPathElement(element, rootTagElement != null && element.contains(rootTagElement)));
+					new SearchPathElement(element, rootTagElement != null && element.contains(rootTagElement))
+				);
 			}
 		}
 
@@ -175,15 +172,15 @@ public class SearchPathTreeHandler {
 		if (lastElement.getName().contains(ATTRIBUTE_TAG)) {
 			final String[] elements = lastElement.getName().split(ATTRIBUTE_TAG);
 			if (elements.length != 2) {
-				throw new XFlatRunTimeException(String.format(
-						"Invalide attribute tag in element %s of the searchingPath %s", lastElement.getName(), path));
+				throw new XFlatRunTimeException(
+					String.format("Invalide attribute tag in element %s of the searchingPath %s", lastElement.getName(), path)
+				);
 			}
 
 			if (!ELEMENT_BEFORE_TAG.equals(elements[0])) {
 				pathElementQueue.add(new SearchPathElement(elements[0], lastElement.isFromRootTag()));
 			}
 			pathElementQueue.add(new SearchPathElementAttribute(index, elements[1]));
-
 		} else {
 			pathElementQueue.add(new SearchPathElementProperty(index, lastElement.getName()));
 		}
@@ -215,13 +212,11 @@ public class SearchPathTreeHandler {
 	 * @return
 	 */
 	static SearchPathNode buildSearchPathNodes(final List<Deque<SearchPathElement>> searchPathElements) {
-
 		SearchPathNode rootTreeNode = null;
 		final Map<Integer, SearchPathNode> previousNodeMap = new HashMap<>();
 
 		final int maxQueueSize = searchPathElements.stream().mapToInt(Deque::size).max().orElse(0);
 		for (int i = 0; i < maxQueueSize; i++) {
-
 			final Map<Integer, SearchPathNode> currentNodeMap = new HashMap<>();
 			final Map<SearchPathElement, SearchPathNode> elementsFoundMap = new HashMap<>();
 
