@@ -1,9 +1,9 @@
-package org.sentrysoftware.xflat.handlers;
+package org.metricshub.xflat.handlers;
 
-import static org.sentrysoftware.xflat.Utils.EMPTY;
 import static java.util.Collections.emptyMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.metricshub.xflat.Utils.EMPTY;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -15,22 +15,21 @@ import static org.mockito.Mockito.mockStatic;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.Test;
+import org.metricshub.xflat.XFlatTestUtils;
+import org.metricshub.xflat.exceptions.XFlatException;
+import org.metricshub.xflat.types.SearchPathElement;
+import org.metricshub.xflat.types.SearchPathElementAttribute;
+import org.metricshub.xflat.types.SearchPathElementProperty;
+import org.metricshub.xflat.types.SearchPathNode;
 import org.mockito.MockedStatic;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import org.sentrysoftware.xflat.XFlatTestUtils;
-import org.sentrysoftware.xflat.exceptions.XFlatException;
-import org.sentrysoftware.xflat.types.SearchPathElement;
-import org.sentrysoftware.xflat.types.SearchPathElementAttribute;
-import org.sentrysoftware.xflat.types.SearchPathElementProperty;
-import org.sentrysoftware.xflat.types.SearchPathNode;
-
 class XmlHandlerTest extends XFlatTestUtils {
 
 	private static final SearchPathNode SEARCH_PATH_NODE;
+
 	static {
 		final SearchPathNode ownerNode = new SearchPathNode(new SearchPathElementProperty(1, "Owner"));
 
@@ -39,8 +38,7 @@ class XmlHandlerTest extends XFlatTestUtils {
 		osNode.addNode(osNameNode);
 
 		final SearchPathNode volumeNameNode = new SearchPathNode(new SearchPathElementAttribute(2, "name"));
-		final SearchPathNode volumeSubscribeNode =
-				new SearchPathNode(new SearchPathElementProperty(3, "Subscribe"));
+		final SearchPathNode volumeSubscribeNode = new SearchPathNode(new SearchPathElementProperty(3, "Subscribe"));
 		final SearchPathNode volumeNode = new SearchPathNode(new SearchPathElement("Volume", false));
 		volumeNode.addNode(volumeNameNode);
 		volumeNode.addNode(volumeSubscribeNode);
@@ -157,31 +155,23 @@ class XmlHandlerTest extends XFlatTestUtils {
 
 			doReturn("1fb7505").when(xmlHandler).generateUniqueLinkKey();
 
-			doReturn(
-			"1fb7505=>82e176f9",
-			"1fb7505=>fa67f9d8",
-			"1fb7505=>62dc3ae1")
-			.when(xmlHandler).generateNextLinkKey("1fb7505");
+			doReturn("1fb7505=>82e176f9", "1fb7505=>fa67f9d8", "1fb7505=>62dc3ae1")
+				.when(xmlHandler)
+				.generateNextLinkKey("1fb7505");
 
-			doReturn(
-			"1fb7505=>62dc3ae1=>69442fb2",
-			"1fb7505=>62dc3ae1=>39622424",
-			"1fb7505=>62dc3ae1=>bc8a4630")
-			.when(xmlHandler).generateNextLinkKey("1fb7505=>62dc3ae1");
+			doReturn("1fb7505=>62dc3ae1=>69442fb2", "1fb7505=>62dc3ae1=>39622424", "1fb7505=>62dc3ae1=>bc8a4630")
+				.when(xmlHandler)
+				.generateNextLinkKey("1fb7505=>62dc3ae1");
 
 			doCallRealMethod().when(xmlHandler).initNavigation(any(SearchPathNode.class), any(Node.class));
 
-			doCallRealMethod().when(xmlHandler).navigateNext(
-					any(SearchPathNode.class),
-					any(Node.class),
-					anyString(),
-					anyMap());
+			doCallRealMethod()
+				.when(xmlHandler)
+				.navigateNext(any(SearchPathNode.class), any(Node.class), anyString(), anyMap());
 
-			doCallRealMethod().when(xmlHandler).navigateElement(
-					any(SearchPathNode.class),
-					any(Element.class),
-					anyString(),
-					anyMap());
+			doCallRealMethod()
+				.when(xmlHandler)
+				.navigateElement(any(SearchPathNode.class), any(Element.class), anyString(), anyMap());
 
 			doCallRealMethod().when(xmlHandler).endNavigate(any(SearchPathElement.class), anyString(), anyMap());
 

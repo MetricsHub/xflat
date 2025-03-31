@@ -1,10 +1,10 @@
-package org.sentrysoftware.xflat.types;
+package org.metricshub.xflat.types;
 
 /*-
  * ╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲
  * XFlat Utility
  * ჻჻჻჻჻჻
- * Copyright 2023 Sentry Software
+ * Copyright (C) 2023 - 2025 MetricsHub
  * ჻჻჻჻჻჻
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,5 +62,4 @@ public class SearchPathElementProperty extends SearchPathElement {
 	public String toString() {
 		return "SearchPathElementProperty [id=" + id + ", getName()=" + getName() + "]";
 	}
-
 }

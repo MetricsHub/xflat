@@ -1,10 +1,10 @@
-package org.sentrysoftware.xflat.types;
+package org.metricshub.xflat.exceptions;
 
 /*-
  * ╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲
  * XFlat Utility
  * ჻჻჻჻჻჻
- * Copyright 2023 Sentry Software
+ * Copyright (C) 2023 - 2025 MetricsHub
  * ჻჻჻჻჻჻
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,15 +20,11 @@ package org.sentrysoftware.xflat.types;
  * ╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱
  */
 
-public class SearchPathElementAttribute extends SearchPathElementProperty {
+public class XFlatRunTimeException extends RuntimeException {
 
-	public SearchPathElementAttribute(final int id, final String name) {
-		super(id, name);
+	private static final long serialVersionUID = 1L;
+
+	public XFlatRunTimeException(final String message) {
+		super(message);
 	}
-
-	@Override
-	public String toString() {
-		return "SearchPathElementAttribute [getId()=" + getId() + ", getName()=" + getName() + "]";
-	}
-
 }

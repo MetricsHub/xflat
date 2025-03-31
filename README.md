@@ -1,13 +1,13 @@
 # XFlat Utility
 
-![GitHub release (with filter)](https://img.shields.io/github/v/release/sentrysoftware/xflat)
-![Build](https://img.shields.io/github/actions/workflow/status/sentrysoftware/xflat/deploy.yml)
-![GitHub top language](https://img.shields.io/github/languages/top/sentrysoftware/xflat)
-![License](https://img.shields.io/github/license/sentrysoftware/xflat)
+![GitHub release (with filter)](https://img.shields.io/github/v/release/metricshub/xflat)
+![Build](https://img.shields.io/github/actions/workflow/status/metricshub/xflat/deploy.yml)
+![GitHub top language](https://img.shields.io/github/languages/top/metricshub/xflat)
+![License](https://img.shields.io/github/license/metricshub/xflat)
 
-The XFlat Utility is responsible of parsing XML files into a list of values list.
+The XFlat Utility is responsible for parsing XML files into a list of values list.
 
-See **[Project Documentation](https://sentrysoftware.org/xflat)** and the [Javadoc](https://sentrysoftware.org/xflat/apidocs) for more information on how to use this library in your code.
+See **[Project Documentation](https://metricshub.org/xflat)** and the [Javadoc](https://metricshub.org/xflat/apidocs/) for more information on how to use this library in your code.
 
 ## Build instructions
 

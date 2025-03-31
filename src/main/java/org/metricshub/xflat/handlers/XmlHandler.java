@@ -1,10 +1,10 @@
-package org.sentrysoftware.xflat.handlers;
+package org.metricshub.xflat.handlers;
 
 /*-
  * ╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲
  * XFlat Utility
  * ჻჻჻჻჻჻
- * Copyright 2023 Sentry Software
+ * Copyright (C) 2023 - 2025 MetricsHub
  * ჻჻჻჻჻჻
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,10 +32,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
-
+import org.metricshub.xflat.Utils;
+import org.metricshub.xflat.exceptions.XFlatException;
+import org.metricshub.xflat.types.SearchPathElement;
+import org.metricshub.xflat.types.SearchPathElementAttribute;
+import org.metricshub.xflat.types.SearchPathElementProperty;
+import org.metricshub.xflat.types.SearchPathNode;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -43,23 +47,18 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import org.sentrysoftware.xflat.Utils;
-import org.sentrysoftware.xflat.exceptions.XFlatException;
-import org.sentrysoftware.xflat.types.SearchPathElement;
-import org.sentrysoftware.xflat.types.SearchPathElementAttribute;
-import org.sentrysoftware.xflat.types.SearchPathElementProperty;
-import org.sentrysoftware.xflat.types.SearchPathNode;
-
 public class XmlHandler {
 
-	private XmlHandler() { }
+	private XmlHandler() {}
 
 	private static final DocumentBuilderFactory DOCUMENT_FACTORY;
+
 	static {
-		DOCUMENT_FACTORY = DocumentBuilderFactory.newInstance(
+		DOCUMENT_FACTORY =
+			DocumentBuilderFactory.newInstance(
 				"com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl",
 				ClassLoader.getSystemClassLoader()
-		);
+			);
 		DOCUMENT_FACTORY.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, Utils.EMPTY);
 		DOCUMENT_FACTORY.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, Utils.EMPTY);
 	}
@@ -75,18 +74,14 @@ public class XmlHandler {
 	 * @return The result map issued from the XML parsing
 	 * @throws XFlatException for error in parsing
 	 */
-	public static Map<String, Map<Integer, String>> parse(
-			final String xml,
-			final SearchPathNode searchPathNode) throws XFlatException {
-
+	public static Map<String, Map<Integer, String>> parse(final String xml, final SearchPathNode searchPathNode)
+		throws XFlatException {
 		// For security because build is a public function but in practical, it's impossible.
 		Utils.checkNonNull(xml, "xml");
 		Utils.checkNonNull(searchPathNode, "searchPathNode");
 
-		try (final StringReader stringReader = new StringReader(xml)) {
-			final Document document = DOCUMENT_FACTORY
-					.newDocumentBuilder()
-					.parse(new InputSource(stringReader));
+		try (StringReader stringReader = new StringReader(xml)) {
+			final Document document = DOCUMENT_FACTORY.newDocumentBuilder().parse(new InputSource(stringReader));
 
 			final XmlHandler xmlHandler = createXmlHandlerInstance();
 
@@ -94,7 +89,6 @@ public class XmlHandler {
 			xmlHandler.initNavigation(searchPathNode, document);
 
 			return xmlHandler.getResultMap();
-
 		} catch (final Exception e) {
 			throw new XFlatException("Error in parsing xml.", e);
 		}
@@ -107,49 +101,46 @@ public class XmlHandler {
 		final SearchPathElement pathElement = searchPathNode.getElement();
 
 		// "jump" to the requested node
-		final NodeList nodeList =
-				(node instanceof Document) ?
-						((Document) node).getElementsByTagName(pathElement.getName()) :
-							((Element) node).getElementsByTagName(pathElement.getName());
+		final NodeList nodeList = (node instanceof Document)
+			? ((Document) node).getElementsByTagName(pathElement.getName())
+			: ((Element) node).getElementsByTagName(pathElement.getName());
 		final int totalNodes = nodeList.getLength();
 
 		if (totalNodes == 0) {
 			endNavigate(pathElement, linkKey, dataValues);
-
 			// recursively navigate the search path tree nodes.
 		} else {
-			 if (totalNodes == 1) {
-				 navigateNext(searchPathNode, nodeList.item(0), linkKey, dataValues);
-
-			 } else {
-				 for (int nodeIndex = 0; nodeIndex < totalNodes; nodeIndex++) {
-						final String nextLinkKey = generateNextLinkKey(linkKey);
-						navigateNext(searchPathNode, nodeList.item(nodeIndex), nextLinkKey, new HashMap<>(dataValues));
-				 }
-			 }
+			if (totalNodes == 1) {
+				navigateNext(searchPathNode, nodeList.item(0), linkKey, dataValues);
+			} else {
+				for (int nodeIndex = 0; nodeIndex < totalNodes; nodeIndex++) {
+					final String nextLinkKey = generateNextLinkKey(linkKey);
+					navigateNext(searchPathNode, nodeList.item(nodeIndex), nextLinkKey, new HashMap<>(dataValues));
+				}
+			}
 		}
 	}
 
 	String generateNextLinkKey(final String linkKey) {
 		return new StringBuilder()
-				.append(linkKey)
-				.append(ResultHandler.LINK_SEPARATOR)
-				.append(generateUniqueLinkKey())
-				.toString();
+			.append(linkKey)
+			.append(ResultHandler.LINK_SEPARATOR)
+			.append(generateUniqueLinkKey())
+			.toString();
 	}
 
 	void navigateNext(
-			final SearchPathNode searchPathNode,
-			final Node node,
-			final String linkKey,
-			final Map<Integer, String> dataValues) {
+		final SearchPathNode searchPathNode,
+		final Node node,
+		final String linkKey,
+		final Map<Integer, String> dataValues
+	) {
 		if (searchPathNode.getNexts().isEmpty()) {
 			endNavigate(linkKey, dataValues);
 			return;
 		}
 
 		for (final SearchPathNode next : searchPathNode.getNexts()) {
-
 			final SearchPathElement pathElement = next.getElement();
 
 			if (pathElement instanceof SearchPathElementAttribute) {
@@ -161,22 +152,20 @@ public class XmlHandler {
 				dataValues.put(searchPathElementAttribute.getId(), value);
 
 				navigateNext(next, element, linkKey, dataValues);
-
 			} else {
 				// Getting all the node children having the next seached element name
 				final NodeList children = node.getChildNodes();
-				final List<Element> elements = IntStream.range(0, children.getLength())
-						.mapToObj(children::item)
-						.filter(child -> pathElement.getName().equals(child.getNodeName()))
-						.map(Element.class::cast)
-						.collect(Collectors.toList());
+				final List<Element> elements = IntStream
+					.range(0, children.getLength())
+					.mapToObj(children::item)
+					.filter(child -> pathElement.getName().equals(child.getNodeName()))
+					.map(Element.class::cast)
+					.collect(Collectors.toList());
 
 				if (elements.isEmpty()) {
 					endNavigate(pathElement, linkKey, dataValues);
-
 				} else if (elements.size() == 1) {
 					navigateElement(next, elements.get(0), linkKey, dataValues);
-
 				} else {
 					for (final Element element : elements) {
 						final String nextLinkKey = generateNextLinkKey(linkKey);
@@ -188,14 +177,14 @@ public class XmlHandler {
 	}
 
 	void navigateElement(
-			final SearchPathNode searchPathNode,
-			final Element element,
-			final String linkKey,
-			final Map<Integer, String> dataValues) {
-
+		final SearchPathNode searchPathNode,
+		final Element element,
+		final String linkKey,
+		final Map<Integer, String> dataValues
+	) {
 		if (searchPathNode.getElement() instanceof SearchPathElementProperty) {
 			final SearchPathElementProperty searchPathElementProperty =
-					(SearchPathElementProperty) searchPathNode.getElement();
+				(SearchPathElementProperty) searchPathNode.getElement();
 			dataValues.put(searchPathElementProperty.getId(), element.getTextContent());
 		}
 
@@ -203,25 +192,27 @@ public class XmlHandler {
 	}
 
 	void endNavigate(
-			final SearchPathElement searchPathElement,
-			final String linkKey,
-			final Map<Integer, String> dataValues) {
+		final SearchPathElement searchPathElement,
+		final String linkKey,
+		final Map<Integer, String> dataValues
+	) {
 		if (searchPathElement.isFromRootTag()) {
 			dataValues.put(ResultHandler.ROOT_TAG_NOT_FOUND, Utils.EMPTY);
 		}
 		endNavigate(linkKey, dataValues);
 	}
 
-	void endNavigate(
-			final String linkKey,
-			final Map<Integer, String> dataValues) {
-		getResultMap().compute(
+	void endNavigate(final String linkKey, final Map<Integer, String> dataValues) {
+		getResultMap()
+			.compute(
 				linkKey,
-				(key, value) -> value == null ?
-						dataValues :
-							// merge result value map with dataValues map
-							Stream.concat(value.entrySet().stream(), dataValues.entrySet().stream())
-							.collect(Collectors.toMap(Entry::getKey, Entry::getValue, (oldValue, newValue) -> oldValue)));
+				(key, value) ->
+					value == null
+						? dataValues
+						: Stream // merge result value map with dataValues map
+							.concat(value.entrySet().stream(), dataValues.entrySet().stream())
+							.collect(Collectors.toMap(Entry::getKey, Entry::getValue, (oldValue, newValue) -> oldValue))
+			);
 	}
 
 	String generateUniqueLinkKey() {

@@ -1,10 +1,10 @@
-package org.sentrysoftware.xflat;
+package org.metricshub.xflat;
 
 /*-
  * ╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲
  * XFlat Utility
  * ჻჻჻჻჻჻
- * Copyright 2023 Sentry Software
+ * Copyright (C) 2023 - 2025 MetricsHub
  * ჻჻჻჻჻჻
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,18 +24,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import org.sentrysoftware.xflat.handlers.SearchPathTreeHandler;
-import org.sentrysoftware.xflat.handlers.XmlHandler;
-import org.sentrysoftware.xflat.types.SearchPathNode;
-import org.sentrysoftware.xflat.handlers.ResultHandler;
-import org.sentrysoftware.xflat.exceptions.XFlatException;
-
-
+import org.metricshub.xflat.exceptions.XFlatException;
+import org.metricshub.xflat.handlers.ResultHandler;
+import org.metricshub.xflat.handlers.SearchPathTreeHandler;
+import org.metricshub.xflat.handlers.XmlHandler;
+import org.metricshub.xflat.types.SearchPathNode;
 
 public class XFlat {
 
-	private XFlat() { }
+	private XFlat() {}
 
 	/**
 	 * Parse a XML with the argument properties into a list of values list.
@@ -47,18 +44,17 @@ public class XFlat {
 	 * @return The list of values list.
 	 * @throws XFlatException
 	 */
-	public static List<List<String>> parseXml(
-			final String xml,
-			final String properties,
-			final String rootTag) throws XFlatException {
+	public static List<List<String>> parseXml(final String xml, final String properties, final String rootTag)
+		throws XFlatException {
 		Utils.checkNonBlank(xml, "xml");
 		Utils.checkNonBlank(properties, "properties");
 		Utils.checkNonBlank(rootTag, "rootTag");
 
 		// Init complete search path for each properties.
-		final List<String> propertiesList = Stream.of(properties.replaceAll("\\s", Utils.EMPTY).split(";"))
-				.filter(property -> !Utils.isBlank(property))
-				.collect(Collectors.toList());
+		final List<String> propertiesList = Stream
+			.of(properties.replaceAll("\\s", Utils.EMPTY).split(";"))
+			.filter(property -> !Utils.isBlank(property))
+			.collect(Collectors.toList());
 
 		final SearchPathNode rootTreeNode = SearchPathTreeHandler.build(propertiesList, rootTag);
 

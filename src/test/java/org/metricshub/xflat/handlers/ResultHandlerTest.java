@@ -1,26 +1,24 @@
-package org.sentrysoftware.xflat.handlers;
+package org.metricshub.xflat.handlers;
 
-import static org.sentrysoftware.xflat.Utils.EMPTY;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.metricshub.xflat.Utils.EMPTY;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.junit.jupiter.api.Test;
 
 class ResultHandlerTest {
 
 	@Test
 	void testArrange() {
-
 		assertEquals(emptyList(), ResultHandler.arrange(null, 0));
 		assertEquals(emptyList(), ResultHandler.arrange(emptyMap(), 0));
 
@@ -90,11 +88,12 @@ class ResultHandlerTest {
 		}
 
 		final List<List<String>> expected = asList(
-				asList("Linux", "User", "Vol1", "600", "Disk1", "1000", "500"),
-				asList("Linux", "User", "", "", "Disk2", "2000", "750"),
-				asList("Linux", "User", "Vol3.0", "3000", "Disk3", "2900",  "1500"),
-				asList("Linux", "User", "Vol3.1", "3100", "Disk3", "2900",  "1500"),
-				asList("Linux", "User", "Vol3.2", "3200", "Disk3", "2900",  "1500"));
+			asList("Linux", "User", "Vol1", "600", "Disk1", "1000", "500"),
+			asList("Linux", "User", "", "", "Disk2", "2000", "750"),
+			asList("Linux", "User", "Vol3.0", "3000", "Disk3", "2900", "1500"),
+			asList("Linux", "User", "Vol3.1", "3100", "Disk3", "2900", "1500"),
+			asList("Linux", "User", "Vol3.2", "3200", "Disk3", "2900", "1500")
+		);
 
 		assertEquals(expected, ResultHandler.arrange(rowValuesMap, totalProperties));
 	}

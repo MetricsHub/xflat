@@ -9,7 +9,7 @@
 			<status>up</status>
 			<netmask>255.255.0.0</netmask>
 			<gateway>10.0.0.244</gateway>
-			<domainname>internal.sentrysoftware.net</domainname>
+			<domainname>internal.metricshub.net</domainname>
 			<macaddress>00:15:5D:0A:F9:15</macaddress>
 			<usage>both</usage>
 			<mtu>1500</mtu>
